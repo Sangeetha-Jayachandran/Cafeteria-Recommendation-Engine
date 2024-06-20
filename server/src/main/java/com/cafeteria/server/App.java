@@ -8,12 +8,10 @@ public class App {
     private static final int PORT = 8080;
 
     public static void main(String[] args) {
-        // Start the database cleanup task
         ServerThread.startCleanupTask();
 
-        // Your existing server startup code...
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("Server is listening on port 8080");
+            System.out.println("Server is listening on port " + PORT);
 
             while (true) {
                 Socket socket = serverSocket.accept();

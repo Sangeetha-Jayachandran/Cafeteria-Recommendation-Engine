@@ -1,8 +1,8 @@
 package com.cafeteria.server.services;
 
-import com.cafeteria.server.DatabaseConnection;
 import com.cafeteria.server.models.Feedback;
 import com.cafeteria.server.models.MenuItem;
+import com.cafeteria.server.utils.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

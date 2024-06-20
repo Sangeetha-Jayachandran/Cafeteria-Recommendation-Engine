@@ -1,7 +1,7 @@
 package com.cafeteria.server.services;
 
-import com.cafeteria.server.DatabaseConnection;
 import com.cafeteria.server.models.MenuItem;
+import com.cafeteria.server.utils.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -85,42 +85,8 @@ public class RecommendationService {
         return recommendations.toString();
     }
 
-    public String viewTopVotedItems() {
-        StringBuilder topVotedItems = new StringBuilder();
-        String query = "SELECT mi.item_name, mi.category, COUNT(r.recommendation_id) AS votes " +
-                       "FROM recommendations r " +
-                       "JOIN menu_items mi ON r.item_id = mi.item_id " +
-                       "GROUP BY r.item_id " +
-                       "ORDER BY votes DESC " +
-                       "LIMIT 2";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                topVotedItems.append("Item: ").append(rs.getString("item_name"))
-                        .append(", Category: ").append(rs.getString("category"))
-                        .append(", Votes: ").append(rs.getInt("votes")).append("\n");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return topVotedItems.toString();
-    }
-
-    public void voteForItem(int userId, int itemId) {
-        String query = "INSERT INTO votes (user_id, item_id, date_voted) VALUES (?, ?, CURDATE())";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, userId);
-            pstmt.setInt(2, itemId);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public List<MenuItem> getTopItems(String category) {
-        List<MenuItem> topItems = new ArrayList<>();
+    public List<MenuItem> getTopRecommendation(String category) {
+        List<MenuItem> topRecommendations = new ArrayList<>();
         String query = "SELECT f.item_id, m.item_name, AVG(f.rating) as avg_rating, COUNT(f.comment) as comment_count, " +
                        "GROUP_CONCAT(f.comment SEPARATOR ' ') as comments " +
                        "FROM feedback f " +
@@ -142,13 +108,13 @@ public class RecommendationService {
                     String sentiment = analyzeSentiment(comments);
 
                     // Add the MenuItem to the list
-                    topItems.add(new MenuItem(itemId, itemName, category, avgRating, sentiment, true));
+                    topRecommendations.add(new MenuItem(itemId, itemName, category, avgRating, sentiment, true));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return topItems;
+        return topRecommendations;
     }
 
     public List<MenuItem> getLatestRecommendations() {
@@ -205,5 +171,16 @@ public class RecommendationService {
             }
         }
         return count;
+    }
+    
+    public static void cleanupOldRecommendations() {
+        String query = "DELETE FROM recommendations WHERE date_recommended < CURDATE()";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println("Deleted " + rowsAffected + " old recommendations.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

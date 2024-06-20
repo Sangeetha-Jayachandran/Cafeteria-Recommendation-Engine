@@ -1,7 +1,7 @@
 package com.cafeteria.server.services;
 
-import com.cafeteria.server.DatabaseConnection;
 import com.cafeteria.server.models.User;
+import com.cafeteria.server.utils.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

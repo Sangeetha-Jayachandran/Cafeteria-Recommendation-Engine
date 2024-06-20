@@ -48,37 +48,20 @@ public class Client {
     }
 
     private static void handleAdmin(ObjectInputStream in, ObjectOutputStream out, Scanner scanner) throws IOException, ClassNotFoundException {
-        while (true) {
-            System.out.println((String) in.readObject());
-            int adminChoice = scanner.nextInt();
-            scanner.nextLine(); 
-            out.writeObject(adminChoice);
+    	System.out.println((String) in.readObject());
+        String username = scanner.nextLine();
+        out.writeObject(username);
+        System.out.println((String) in.readObject());
+        String password = scanner.nextLine();
+        out.writeObject(password);
 
-            switch (adminChoice) {
-                case 1:
-                    System.out.println((String) in.readObject());
-                    String username = scanner.nextLine();
-                    out.writeObject(username);
-                    System.out.println((String) in.readObject());
-                    String password = scanner.nextLine();
-                    out.writeObject(password);
-
-                    String response = (String) in.readObject();
-                    System.out.println(response);
-                    if ("Invalid admin credentials.".equals(response)) {
-                        break;
-                    } else {
-                        handleAdminActions(in, out, scanner);
-                    }
-                    break;
-                case 2:
-                    return;
-            }
+        String response = (String) in.readObject();
+        System.out.println(response);
+        if ("Invalid chef credentials.".equals(response)) {
+            return;
         }
-    }
-
-    private static void handleAdminActions(ObjectInputStream in, ObjectOutputStream out, Scanner scanner) throws IOException, ClassNotFoundException {
-        while (true) {
+    	
+    	while (true) {
             System.out.println((String) in.readObject());
             int actionChoice = scanner.nextInt();
             scanner.nextLine();
@@ -86,67 +69,90 @@ public class Client {
 
             switch (actionChoice) {
                 case 1:
-                    System.out.println((String) in.readObject());
-                    String newUsername = scanner.nextLine();
-                    out.writeObject(newUsername);
-                    System.out.println((String) in.readObject());
-                    String newPassword = scanner.nextLine();
-                    out.writeObject(newPassword);
-                    System.out.println((String) in.readObject());
-                    String newRole = scanner.nextLine();
-                    out.writeObject(newRole);
-                    System.out.println((String) in.readObject());
+                    registerUser(in, out, scanner);
                     break;
                 case 2:
-                    System.out.println((String) in.readObject());
-                    String itemName = scanner.nextLine();
-                    out.writeObject(itemName);
-                    System.out.println((String) in.readObject());
-                    String category = scanner.nextLine();
-                    out.writeObject(category);
-                    System.out.println((String) in.readObject());
-                    double price = scanner.nextDouble();
-                    out.writeObject(price);
-                    System.out.println((String) in.readObject());
-                    boolean availability = scanner.nextBoolean();
-                    out.writeObject(availability);
-                    scanner.nextLine();
-                    System.out.println((String) in.readObject());
+                    addMenuItem(in, out, scanner);
                     break;
                 case 3:
-                    System.out.println((String) in.readObject());
-                    int updateItemId = scanner.nextInt();
-                    out.writeObject(updateItemId);
-                    scanner.nextLine();
-                    System.out.println((String) in.readObject());
-                    String updateItemName = scanner.nextLine();
-                    out.writeObject(updateItemName);
-                    System.out.println((String) in.readObject());
-                    String updateCategory = scanner.nextLine();
-                    out.writeObject(updateCategory);
-                    System.out.println((String) in.readObject());
-                    double updatePrice = scanner.nextDouble();
-                    out.writeObject(updatePrice);
-                    System.out.println((String) in.readObject());
-                    boolean updateAvailability = scanner.nextBoolean();
-                    out.writeObject(updateAvailability);
-                    scanner.nextLine();
-                    System.out.println((String) in.readObject());
+                    updateMenuItem(in, out, scanner);
                     break;
                 case 4:
-                    System.out.println((String) in.readObject());
-                    int deleteItemId = scanner.nextInt();
-                    out.writeObject(deleteItemId);
-                    scanner.nextLine();
-                    System.out.println((String) in.readObject());
+                    deleteMenuItem(in, out, scanner);
                     break;
                 case 5:
-                    System.out.println((String) in.readObject());
+                    viewMenu(in);
                     break;
                 case 6:
+                	System.out.println((String) in.readObject());
                     return;
+                default:
+                    System.out.println("Invalid choice."); 
             }
         }
+    }
+
+    private static void registerUser(ObjectInputStream in, ObjectOutputStream out, Scanner scanner) throws IOException, ClassNotFoundException {
+        System.out.println((String) in.readObject());
+        String newUsername = scanner.nextLine();
+        out.writeObject(newUsername);
+        System.out.println((String) in.readObject());
+        String newPassword = scanner.nextLine();
+        out.writeObject(newPassword);
+        System.out.println((String) in.readObject());
+        String newRole = scanner.nextLine();
+        out.writeObject(newRole);
+        System.out.println((String) in.readObject());
+    }
+
+    private static void addMenuItem(ObjectInputStream in, ObjectOutputStream out, Scanner scanner) throws IOException, ClassNotFoundException {
+        System.out.println((String) in.readObject());
+        String itemName = scanner.nextLine();
+        out.writeObject(itemName);
+        System.out.println((String) in.readObject());
+        String category = scanner.nextLine();
+        out.writeObject(category);
+        System.out.println((String) in.readObject());
+        double price = scanner.nextDouble();
+        out.writeObject(price);
+        System.out.println((String) in.readObject());
+        boolean availability = scanner.nextBoolean();
+        out.writeObject(availability);
+        scanner.nextLine();
+        System.out.println((String) in.readObject());
+    }
+
+    private static void updateMenuItem(ObjectInputStream in, ObjectOutputStream out, Scanner scanner) throws IOException, ClassNotFoundException {
+        System.out.println((String) in.readObject());
+        int updateItemId = scanner.nextInt();
+        out.writeObject(updateItemId);
+        scanner.nextLine();
+        System.out.println((String) in.readObject());
+        String updateItemName = scanner.nextLine();
+        out.writeObject(updateItemName);
+        System.out.println((String) in.readObject());
+        String updateCategory = scanner.nextLine();
+        out.writeObject(updateCategory);
+        System.out.println((String) in.readObject());
+        double updatePrice = scanner.nextDouble();
+        out.writeObject(updatePrice);
+        System.out.println((String) in.readObject());
+        boolean updateAvailability = scanner.nextBoolean();
+        out.writeObject(updateAvailability);
+        scanner.nextLine();
+        System.out.println((String) in.readObject());
+    }
+
+    private static void deleteMenuItem(ObjectInputStream in, ObjectOutputStream out, Scanner scanner) throws IOException, ClassNotFoundException {
+        System.out.println((String) in.readObject());
+        int deleteItemId = scanner.nextInt();
+        out.writeObject(deleteItemId);
+        scanner.nextLine();
+        System.out.println((String) in.readObject());
+    }
+
+    private static void viewMenu(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        System.out.println((String) in.readObject());
     }
 
     private static void handleChef(ObjectInputStream in, ObjectOutputStream out, Scanner scanner) throws IOException, ClassNotFoundException {
@@ -162,6 +168,7 @@ public class Client {
         if ("Invalid chef credentials.".equals(response)) {
             return;
         }
+        System.out.println((String) in.readObject());
 
         while (true) {
             System.out.println((String) in.readObject());
@@ -236,7 +243,7 @@ public class Client {
 
         // Display notifications and employee menu
         System.out.println((String) in.readObject());
-        
+
         while (true) {
             System.out.println((String) in.readObject());
             int employeeChoice = scanner.nextInt();

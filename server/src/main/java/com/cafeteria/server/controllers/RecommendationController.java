@@ -20,16 +20,9 @@ public class RecommendationController {
         return recommendationService.viewRecommendations(userId);
     }
 
-    public String viewTopVotedItems() {
-        return recommendationService.viewTopVotedItems();
-    }
-
-    public void voteForItem(int userId, int itemId) {
-        recommendationService.voteForItem(userId, itemId);
-    }
 
     public List<MenuItem> getTopItems(String category) {
-        return recommendationService.getTopItems(category);
+        return recommendationService.getTopRecommendation(category);
     }
 
     public List<MenuItem> getLatestRecommendations() {
