@@ -63,7 +63,7 @@ public class AdminHandler {
         if (users.isEmpty()) {
             writer.println("No users available.");
         } else {
-            StringBuilder response = new StringBuilder("\nUsers:\n");
+            StringBuilder response = new StringBuilder("Users:\n");
             response.append(String.format("\n%-5s %-20s %-20s\n", "ID", "Username", "Role Name"));
             response.append("-----------------------------------------\n");
             for (User user : users) {
@@ -80,7 +80,7 @@ public class AdminHandler {
         if (menuItems.isEmpty()) {
             writer.println("No menu items available.");
         } else {
-            StringBuilder response = new StringBuilder("\nMenu Items:\n");
+            StringBuilder response = new StringBuilder("Menu Items:\n");
             response.append(String.format("\n%-5s %-20s %-10s %-10s %-15s\n", "ID", "Name", "Type", "Price", "Availability"));
             response.append("---------------------------------------------------------------\n");
             for (MenuItem menuItem : menuItems) {
