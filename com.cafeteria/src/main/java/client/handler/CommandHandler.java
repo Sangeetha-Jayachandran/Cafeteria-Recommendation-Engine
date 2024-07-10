@@ -8,7 +8,7 @@ public class CommandHandler {
             case "ADMIN":
                 return AdminCommandHandler.getAdminCommand(choice, scanner);
             case "CHEF":
-                return ChefCommandHandler.getChefCommand(choice);
+                return ChefCommandHandler.getChefCommand(choice, scanner);
             case "EMPLOYEE":
                 return EmployeeCommandHandler.getEmployeeCommand(choice, scanner);
             default:

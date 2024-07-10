@@ -75,4 +75,48 @@ public class MenuItemService {
 			e.printStackTrace();
 		}
 	}
+	
+	public MenuItem getMenuItemById(int itemId) {
+        String query = "SELECT * FROM MenuItem WHERE item_id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, itemId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String itemName = resultSet.getString("item_name");
+                String itemType = resultSet.getString("item_type");
+                double price = resultSet.getDouble("price");
+                boolean availability = resultSet.getBoolean("availability");
+                return new MenuItem(itemId, itemName, itemType, price, availability);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+	
+	public List<MenuItem> getAllMenuItemsByType(String type) {
+        List<MenuItem> menuItems = new ArrayList<>();
+        String query = "SELECT * FROM MenuItem WHERE item_type = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, type);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int itemId = resultSet.getInt("item_id");
+                String itemName = resultSet.getString("item_name");
+                double price = resultSet.getDouble("price");
+                boolean availability = resultSet.getBoolean("availability");
+
+                MenuItem menuItem = new MenuItem(itemId, itemName, type, price, availability);
+                menuItems.add(menuItem);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return menuItems;
+    }
 }

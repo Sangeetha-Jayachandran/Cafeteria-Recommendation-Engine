@@ -28,4 +28,8 @@ public class MenuItemController {
     public void deleteMenuItem(int itemId) {
     	menuItemService.deleteMenuItem(itemId);
     }
+    
+    public MenuItem getMenuItemById(int itemId) {
+        return menuItemService.getMenuItemById(itemId);
+    }
 }

@@ -3,12 +3,13 @@ package client.handler;
 import java.util.Scanner;
 
 public class EmployeeCommandHandler {
-	static String getEmployeeCommand(int choice, Scanner scanner) {
+
+    public static String getEmployeeCommand(int choice, Scanner scanner) {
         switch (choice) {
             case 1:
-                return "EMPLOYEE VIEW_RECOMMENDATION";
+                return "EMPLOYEE VIEW_NOTIFICATION";
             case 2:
-                return "EMPLOYEE VOTE_MENU_ITEM";
+                return "EMPLOYEE VIEW_MENU";
             case 3:
                 return getEmployeeFeedbackCommand(scanner);
             case 4:
@@ -18,7 +19,6 @@ public class EmployeeCommandHandler {
         }
     }
 
-	   
     private static String getEmployeeFeedbackCommand(Scanner scanner) {
         System.out.println("Enter the item ID you want to give feedback on:");
         int itemId = Integer.parseInt(scanner.nextLine());

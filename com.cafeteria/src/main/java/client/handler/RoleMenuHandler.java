@@ -63,7 +63,7 @@ public class RoleMenuHandler {
     private static void showEmployeeMenu() {
         System.out.println("\nChoose an option:");
         System.out.println("1. View Recommendation for the Next Day");
-        System.out.println("2. Vote for the Next Day Menu Item");
+        System.out.println("2. View Menu");
         System.out.println("3. Give Feedback");
         System.out.println("4. Logout");
     }
