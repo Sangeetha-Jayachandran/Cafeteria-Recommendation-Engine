@@ -1,18 +1,23 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MenuItem {
     private int itemId;
     private String itemName;
     private String itemType;
     private double price;
     private boolean availability;
-
+    private List<Feedback> feedbacks;
+    
     public MenuItem(int itemId, String itemName, String itemType, double price, boolean availability) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemType = itemType;
         this.price = price;
         this.availability = availability;
+        this.feedbacks = new ArrayList<>();
     }
 
     public int getItemId() {
@@ -53,6 +58,14 @@ public class MenuItem {
 
     public void setAvailability(boolean availability) {
         this.availability = availability;
+    }
+    
+    public List<Feedback> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void addFeedback(Feedback feedback) {
+        this.feedbacks.add(feedback);
     }
 
     @Override

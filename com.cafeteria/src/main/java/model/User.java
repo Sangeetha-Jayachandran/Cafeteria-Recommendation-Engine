@@ -7,20 +7,26 @@ public class User {
     private int roleId;
     private String roleName;
 
-    public User(int userId, String username, String roleName) {
-		super();
-		this.userId = userId;
-		this.username = username;
-		this.roleName = roleName;
-	}
-
-	public User(int userId, String username, String password, int roleId) {
+    public User(int userId, String username, String password, int roleId, String roleName) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.roleId = roleId;
+        this.roleName = roleName;
+    }
+    
+    public User(int userId, String username, String password, int roleId) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.roleId = roleId;
     }
-
+    
+    public User(int userId, String username, String roleName) {
+        this.userId = userId;
+        this.username = username;
+        this.roleName = roleName;
+    }
     public int getUserId() {
         return userId;
     }
@@ -53,11 +59,11 @@ public class User {
         this.roleId = roleId;
     }
 
-	public String getRoleName() {
-		return roleName;
-	}
+    public String getRoleName() {
+        return roleName;
+    }
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 }

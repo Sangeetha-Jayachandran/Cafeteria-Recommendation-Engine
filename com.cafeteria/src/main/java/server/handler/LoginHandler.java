@@ -9,21 +9,25 @@ import java.io.PrintWriter;
 public class LoginHandler {
     private static AuthController authController = new AuthController();
 
-    public static String handleLogin(String command, PrintWriter writer) {
+    public static User handleLogin(String command, PrintWriter writer) {
         String[] parts = command.split(" ");
-        if (parts.length != 3) {
-            writer.println("Invalid login command. Use: LOGIN <username> <password>");
+        if (parts.length != 4) {
+            writer.println("Invalid login command. Use: LOGIN <username> <password> <role>");
+            Logger.log("Invalid login command format: " + command);
             return null;
         }
-        String username = parts[1];
-        String password = parts[2];
-        User user = authController.authenticate(username, password);
+        String username = parts[1].trim();
+        String password = parts[2].trim();
+        String role = parts[3].trim().toUpperCase();
+
+        User user = authController.authenticate(username, password, role);
         if (user != null) {
             writer.println("Login successful. Welcome " + username + "!");
-            Logger.log(username + " logged in.");
-            return username;
+            Logger.log(username + " logged in as " + role + ".");
+            return user;
         } else {
-            writer.println("Login failed. Invalid username or password.");
+            writer.println("Invalid username, password, or role.");
+            Logger.log("Login failed for user: " + username + " with role: " + role);
             return null;
         }
     }

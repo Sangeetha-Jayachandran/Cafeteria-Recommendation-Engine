@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MenuItemService {
 	public void createMenuItem(MenuItem menuItem) {
-		String query = "INSERT INTO MenuItems (item_name, item_type, price, availability) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO MenuItem (item_name, item_type, price, availability) VALUES (?, ?, ?, ?)";
 		try (Connection connection = DatabaseConnection.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -26,7 +26,7 @@ public class MenuItemService {
 
 	public List<MenuItem> getAllMenuItems() {
 		List<MenuItem> menuItems = new ArrayList<>();
-		String query = "SELECT * FROM MenuItems";
+		String query = "SELECT * FROM MenuItem";
 
 		try (Connection connection = DatabaseConnection.getConnection();
 				Statement statement = connection.createStatement();
@@ -47,7 +47,7 @@ public class MenuItemService {
 	}
 
 	public void updateMenuItem(MenuItem menuItem) {
-		String query = "UPDATE MenuItems SET item_name = ?, item_type = ?, price = ?, availability = ? WHERE item_id = ?";
+		String query = "UPDATE MenuItem SET item_name = ?, item_type = ?, price = ?, availability = ? WHERE item_id = ?";
 		try (Connection connection = DatabaseConnection.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			preparedStatement.setString(1, menuItem.getItemName());
@@ -63,7 +63,7 @@ public class MenuItemService {
 	}
 
 	public void deleteMenuItem(int itemId) {
-		String query = "DELETE FROM MenuItems WHERE item_id = ?";
+		String query = "DELETE FROM MenuItem WHERE item_id = ?";
 
 		try (Connection connection = DatabaseConnection.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(query)) {

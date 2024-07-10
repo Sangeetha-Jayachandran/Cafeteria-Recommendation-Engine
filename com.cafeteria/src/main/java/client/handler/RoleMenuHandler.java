@@ -57,8 +57,7 @@ public class RoleMenuHandler {
         System.out.println("3. View Recommendation");
         System.out.println("4. Roll Out Menu for Next Day");
         System.out.println("5. View Rollout Menu");
-        System.out.println("6. Generate Monthly Feedback Report");
-        System.out.println("7. Logout");
+        System.out.println("6. Logout");
     }
 
     private static void showEmployeeMenu() {

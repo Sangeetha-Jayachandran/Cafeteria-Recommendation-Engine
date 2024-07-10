@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserService {
 	public void createUser(User user) {
-		String query = "INSERT INTO Users (username, password, role_id) VALUES (?, ?, ?)";
+		String query = "INSERT INTO User (username, password, role_id) VALUES (?, ?, ?)";
 		try (Connection connection = DatabaseConnection.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -25,7 +25,7 @@ public class UserService {
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<>();
 		String query = "SELECT u.user_id, u.username, r.role_name "
-				+ "FROM Users u JOIN Roles r ON u.role_id = r.role_id";
+				+ "FROM User u JOIN Role r ON u.role_id = r.role_id";
 		try (Connection connection = DatabaseConnection.getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(query)) {

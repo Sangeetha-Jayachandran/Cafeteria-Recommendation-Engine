@@ -15,16 +15,25 @@ public class Server {
             Logger.log("Server started on port " + PORT);
 
             while (true) {
-                Socket socket = serverSocket.accept();
-                System.out.println("New client connected");
-                Logger.log("New client connected");
+                try {
+                    Socket socket = serverSocket.accept();
+                    System.out.println("New client connected");
+                    Logger.log("New client connected");
 
-                new ServerThread(socket).start();
+                    new ServerThread(socket).start();
+                } catch (IOException e) {
+                    System.out.println("Error accepting connection: " + e.getMessage());
+                    Logger.log("Error accepting connection: " + e.getMessage());
+                }
             }
         } catch (IOException ex) {
-            System.out.println("Server exception: " + ex.getMessage());
-            Logger.log("Server exception: " + ex.getMessage());
-            ex.printStackTrace();
+            if (ex.getMessage().contains("Address already in use")) {
+                System.out.println("Port " + PORT + " is already in use. Please free up the port and try again.");
+                Logger.log("Port " + PORT + " is already in use. Please free up the port and try again.");
+            } else {
+                System.out.println("Server exception: " + ex.getMessage());
+                Logger.log("Server exception: " + ex.getMessage());
+            }
         }
     }
 }
